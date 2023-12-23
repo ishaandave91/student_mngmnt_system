@@ -37,6 +37,7 @@ class MainWindow(QMainWindow):
         about_action = QAction("About", self)
         help_menu_item.addAction(about_action)
         # about_action.setMenuRole(QAction.MenuRole.NoRole)     # for mac devices if 'Help' menu doesn't show
+        about_action.triggered.connect(self.about)
 
         self.table = QTableWidget()
         self.table.setColumnCount(4)
@@ -92,6 +93,10 @@ class MainWindow(QMainWindow):
 
     def delete(self):
         dialog = DeleteDialog()
+        dialog.exec()
+
+    def about(self):
+        dialog = AboutDialog()
         dialog.exec()
 
 
@@ -322,6 +327,20 @@ class SearchDialog(QDialog):
 
         self.close()
         main_window.table.scrollToItem(item)
+
+
+class AboutDialog(QMessageBox):
+
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("About")
+        content = """
+        This code was created during course Python mega course.
+        Lorem ipsum
+        Blah.Blah.Blah
+        """
+        self.setText(content)
+
 
 
 app = QApplication(sys.argv)
